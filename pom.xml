@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.medeja</groupId>
+  <artifactId>medeja-projeto</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>medeja-projeto</name>
+  <modules>
+    <module>medeja-configuracoes-maven</module>
+    <module>medeja-dependencias</module>
+    <module>medeja-componentes</module>
+  </modules>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <version>2.10</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.camel</groupId>
+              <artifactId>medeja-configuracoes-maven</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <downloadSources>true</downloadSources>
+            <downloadJavadocs>false</downloadJavadocs>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-antrun-plugin</artifactId>
+      <inherited>false</inherited>
+      <executions>
+        <execution>
+          <id>setup.workspace</id>
+          <phase>validate</phase>
+          <configuration>
+            <target>
+              <path id="buildtools.classpath">
+                <pathelement location="${basedir}/medeja-configuracoes-maven/src/main/resources" />
+              </path>
+              <whichresource resource="/medeja-checkstyle.xml" property="checkstyle.url" classpathref="buildtools.classpath" />
+            </target>
+          </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    </plugins>
+  </build>
+</project>
